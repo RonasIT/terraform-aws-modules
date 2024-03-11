@@ -1,0 +1,15 @@
+formatter: 'markdown table'
+
+recursive:
+  enabled: true
+  path: '.'
+
+output:
+  file: 'README.md'
+
+sort:
+  enabled: true
+  by: name
+
+settings:
+  hide-empty: true
