@@ -217,7 +217,7 @@ module "allow_assume_teamleads_iam_policy" {
   })
 }
 
-resource "aws_iam_policy" "ecr_policy" {
+resource "aws_iam_policy" "ecr_read_only_policy" {
   name        = "ECRReadOnly"
   description = "Policy to allow read access to ECR by EKS. Managed by Terraform."
 
