@@ -48,8 +48,8 @@ output "developers_iam_role" {
   sensitive   = false
 }
 
-output "ecr_pull_policy_arn" {
+output "ecr_read_only_policy_arn" {
   value       = aws_iam_policy.ecr_read_only_policy.arn
-  description = "ECR access policy ARN to attach to EKS nodes"
+  description = "ARN of the ECR read-only access policy to attach to EKS nodes"
   sensitive   = false
 }

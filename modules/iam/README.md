@@ -30,7 +30,7 @@
 | [aws_iam_group_membership.developer_group_membership](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_group_membership) | resource |
 | [aws_iam_group_membership.teamlead_group_membership](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_group_membership) | resource |
 | [aws_iam_policy.developer_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
-| [aws_iam_policy.ecr_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
+| [aws_iam_policy.ecr_read_only_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.storage_s3_access](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_user_policy_attachment.storage_s3_access_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy_attachment) | resource |
 | [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
@@ -48,7 +48,7 @@
 |------|-------------|
 | <a name="output_developer_users"></a> [developer\_users](#output\_developer\_users) | Account data to use by developers |
 | <a name="output_developers_iam_role"></a> [developers\_iam\_role](#output\_developers\_iam\_role) | Developer role details to use in other modules |
-| <a name="output_ecr_pull_policy_arn"></a> [ecr\_pull\_policy\_arn](#output\_ecr\_pull\_policy\_arn) | ECR access policy ARN to attach to EKS nodes |
+| <a name="output_ecr_read_only_policy_arn"></a> [ecr\_read\_only\_policy\_arn](#output\_ecr\_read\_only\_policy\_arn) | ARN of the ECR read-only access policy to attach to EKS nodes |
 | <a name="output_gitlab_runner_user"></a> [gitlab\_runner\_user](#output\_gitlab\_runner\_user) | Account data to use inside gitlab-runner configuration to access cache storage |
 | <a name="output_gitlab_user"></a> [gitlab\_user](#output\_gitlab\_user) | Account data to use inside CI/CD jobs in GitLab CI |
 | <a name="output_storage_user_access_key_id"></a> [storage\_user\_access\_key\_id](#output\_storage\_user\_access\_key\_id) | n/a |
