@@ -2,8 +2,8 @@
   "conventionalCommits.scopes": [
     "ecr",
     "iam",
+    "eks-post-setup",
     "k8s-addons",
-    "k8s-post-setup",
     "k8s-resource",
     "s3"
   ]
