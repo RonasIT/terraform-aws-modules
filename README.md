@@ -32,3 +32,6 @@ We appreciate your contributions! We'll review your pull request and provide fee
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+<!-- BEGIN_TF_DOCS -->
+
+<!-- END_TF_DOCS -->
