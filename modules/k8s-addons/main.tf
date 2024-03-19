@@ -7,7 +7,13 @@ resource "helm_release" "ingress_nginx" {
   namespace        = "ingress-nginx"
   version          = "4.10.0"
   create_namespace = true
+
+  set {
+    name  = "controller.allowSnippetAnnotations"
+    value = "true"
+  }
 }
+
 
 
 resource "helm_release" "cert_manager" {
