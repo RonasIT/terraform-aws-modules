@@ -17,7 +17,6 @@
       "extensions": [
         "streetsidesoftware.code-spell-checker",
         "Codeium.codeium",
-        "vivaxy.vscode-conventional-commits",
         "hashicorp.hcl",
         "fredwangwang.vscode-hcl-format",
         "GitHub.vscode-pull-request-github"
