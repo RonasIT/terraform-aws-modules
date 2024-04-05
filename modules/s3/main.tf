@@ -14,34 +14,14 @@ resource "aws_s3_bucket_public_access_block" "artifacts" {
   restrict_public_buckets = true
 }
 
-resource "aws_s3_bucket_policy" "artifacts_bucket_policy" {
-  bucket = aws_s3_bucket.artifacts.id
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Principal = {
-          AWS = var.gitlab_runner_user_arn
-        }
-        Action = [
-          "s3:*"
-        ]
-        Resource = [
-          "${aws_s3_bucket.artifacts.arn}/*",
-          "${aws_s3_bucket.artifacts.arn}"
-        ]
-      }
-    ]
-  })
-}
-
 resource "aws_s3_bucket" "gitlab_runner" {
+  count  = var.create_gitlab_runner_bucket ? 1 : 0
   bucket = var.gitlab_runner_bucket_name
 }
 
 resource "aws_s3_bucket_public_access_block" "gitlab_runner" {
-  bucket                  = aws_s3_bucket.gitlab_runner.id
+  count                   = var.create_gitlab_runner_bucket ? 1 : 0
+  bucket                  = aws_s3_bucket.gitlab_runner[0].id
   block_public_acls       = true
   block_public_policy     = true
   ignore_public_acls      = true
@@ -49,7 +29,8 @@ resource "aws_s3_bucket_public_access_block" "gitlab_runner" {
 }
 
 resource "aws_s3_bucket_policy" "gitlab_runner" {
-  bucket = aws_s3_bucket.gitlab_runner.id
+  count  = var.create_gitlab_runner_bucket ? 1 : 0
+  bucket = aws_s3_bucket.gitlab_runner[0].id
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -62,8 +43,8 @@ resource "aws_s3_bucket_policy" "gitlab_runner" {
           "s3:*"
         ]
         Resource = [
-          "${aws_s3_bucket.gitlab_runner.arn}/*",
-          "${aws_s3_bucket.gitlab_runner.arn}"
+          "${aws_s3_bucket.gitlab_runner[0].arn}/*",
+          "${aws_s3_bucket.gitlab_runner[0].arn}"
         ]
       }
     ]

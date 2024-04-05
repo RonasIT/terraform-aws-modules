@@ -4,13 +4,20 @@ variable "artifacts_bucket_name" {
   type        = string
 }
 
+variable "create_gitlab_runner_bucket" {
+  default     = true
+  description = "Flag to enable/disable creation of dedicated bucket for gitlab-runner cache"
+  type        = bool
+}
+
 variable "gitlab_runner_bucket_name" {
-  default     = "gitlab-runner-cache"
-  description = "The name of a dedicated bucket for storing gitlab-runner cache"
+  description = "The name of a dedicated bucket for storing gitlab-runner cache."
   type        = string
+  default     = "gitlab-runner-cache"
 }
 
 variable "gitlab_runner_user_arn" {
-  description = "ARN of gitlab-runner user that will have access to bucket"
+  default     = ""
+  description = "ARN of gitlab-runner user that will have access to bucket. Required if `create_gitlab_runner_bucket` is true."
   type        = string
 }
