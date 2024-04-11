@@ -9,31 +9,56 @@ module "ecr" {
   repository_image_tag_mutability = "MUTABLE"
 
   repository_lifecycle_policy = jsonencode({
-    rules = [
+    "rules" : [
       {
-        rulePriority = 1,
-        description  = "Keep last 1 images for each 'development', 'staging', 'production'",
-        selection = {
-          tagStatus     = "tagged",
-          tagPrefixList = ["development", "staging", "production"],
-          countType     = "imageCountMoreThan",
-          countNumber   = 1
+        "rulePriority" : 2,
+        "description" : "keep production images",
+        "selection" : {
+          "tagStatus" : "tagged",
+          "tagPrefixList" : ["production"],
+          "countType" : "imageCountMoreThan",
+          "countNumber" : 9999
         },
-        action = {
-          type = "expire"
+        "action" : {
+          "type" : "expire"
         }
       },
       {
-        rulePriority = 2,
-        description  = "Keep last 10 images",
-        selection = {
-          tagStatus     = "tagged",
-          tagPrefixList = ["v"],
-          countType     = "imageCountMoreThan",
-          countNumber   = 10
+        "rulePriority" : 3,
+        "description" : "keep staging images",
+        "selection" : {
+          "tagStatus" : "tagged",
+          "tagPrefixList" : ["staging"],
+          "countType" : "imageCountMoreThan",
+          "countNumber" : 9999
         },
-        action = {
-          type = "expire"
+        "action" : {
+          "type" : "expire"
+        }
+      },
+      {
+        "rulePriority" : 4,
+        "description" : "keep development images",
+        "selection" : {
+          "tagStatus" : "tagged",
+          "tagPrefixList" : ["development"],
+          "countType" : "imageCountMoreThan",
+          "countNumber" : 9999
+        },
+        "action" : {
+          "type" : "expire"
+        }
+      },
+      {
+        "rulePriority" : 5,
+        "description" : "remove old images",
+        "selection" : {
+          "tagStatus" : "any",
+          "countType" : "imageCountMoreThan",
+          "countNumber" : 10
+        },
+        "action" : {
+          "type" : "expire"
         }
       }
     ]
