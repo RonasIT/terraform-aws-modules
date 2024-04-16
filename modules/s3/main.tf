@@ -1,3 +1,11 @@
+resource "aws_s3_bucket" "artifacts" {
+  bucket = var.artifacts_bucket_name
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
 resource "aws_s3_bucket_ownership_controls" "artifacts" {
   bucket = aws_s3_bucket.artifacts.id
 
