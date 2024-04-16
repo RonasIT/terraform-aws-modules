@@ -21,3 +21,9 @@ variable "gitlab_runner_user_arn" {
   description = "ARN of gitlab-runner user that will have access to bucket. Required if `create_gitlab_runner_bucket` is true."
   type        = string
 }
+
+variable "allow_artifacts_bucket_acls" {
+  description = "Allow individual ACLs for artifacts bucket and create corresponding bucket policy"
+  type        = bool
+  default     = false
+}
