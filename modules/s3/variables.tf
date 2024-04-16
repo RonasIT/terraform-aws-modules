@@ -23,7 +23,7 @@ variable "gitlab_runner_user_arn" {
 }
 
 variable "allow_artifacts_bucket_acls" {
-  description = "Allow individual ACLs for artifacts bucket and create corresponding bucket policy"
+  description = "Allow individual ACLs for artifacts bucket and create corresponding bucket ownership controls"
   type        = bool
   default     = false
 }
