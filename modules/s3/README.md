@@ -23,7 +23,7 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_allow_artifacts_bucket_acls"></a> [allow\_artifacts\_bucket\_acls](#input\_allow\_artifacts\_bucket\_acls) | Allow individual ACLs for artifacts bucket and create corresponding bucket policy | `bool` | `false` | no |
+| <a name="input_allow_artifacts_bucket_acls"></a> [allow\_artifacts\_bucket\_acls](#input\_allow\_artifacts\_bucket\_acls) | Allow individual ACLs for artifacts bucket and create corresponding bucket ownership controls | `bool` | `false` | no |
 | <a name="input_artifacts_bucket_name"></a> [artifacts\_bucket\_name](#input\_artifacts\_bucket\_name) | The name of a bucket for storing application artifacts, including user uploads, cache, etc. | `string` | `"artifacts"` | no |
 | <a name="input_create_gitlab_runner_bucket"></a> [create\_gitlab\_runner\_bucket](#input\_create\_gitlab\_runner\_bucket) | Flag to enable/disable creation of dedicated bucket for gitlab-runner cache | `bool` | `true` | no |
 | <a name="input_gitlab_runner_bucket_name"></a> [gitlab\_runner\_bucket\_name](#input\_gitlab\_runner\_bucket\_name) | The name of a dedicated bucket for storing gitlab-runner cache. | `string` | `"gitlab-runner-cache"` | no |
