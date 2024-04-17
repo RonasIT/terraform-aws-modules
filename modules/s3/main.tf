@@ -6,12 +6,29 @@ resource "aws_s3_bucket" "artifacts" {
   }
 }
 
+resource "aws_s3_bucket_ownership_controls" "artifacts" {
+  bucket = aws_s3_bucket.artifacts.id
+
+  rule {
+    object_ownership = var.allow_artifacts_bucket_acls ? "BucketOwnerPreferred" : "BucketOwnerEnforced"
+  }
+
+}
+
+resource "aws_s3_bucket_acl" "artifacts" {
+  count = var.allow_artifacts_bucket_acls ? 1 : 0
+
+  bucket     = aws_s3_bucket.artifacts.id
+  acl        = "private"
+  depends_on = [aws_s3_bucket_ownership_controls.artifacts]
+}
+
 resource "aws_s3_bucket_public_access_block" "artifacts" {
   bucket                  = aws_s3_bucket.artifacts.id
-  block_public_acls       = true
-  block_public_policy     = true
-  ignore_public_acls      = true
+  block_public_acls       = !var.allow_artifacts_bucket_acls
+  ignore_public_acls      = !var.allow_artifacts_bucket_acls
   restrict_public_buckets = true
+  block_public_policy     = true
 }
 
 resource "aws_s3_bucket" "gitlab_runner" {
