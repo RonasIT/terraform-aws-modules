@@ -12,3 +12,9 @@ variable "cluster_autoscaler_role_arn" {
   description = "ARN of cluster autoscaler role to use for annotating cluster-autoscaler service account"
   type        = string
 }
+
+variable "autoscaler_scale_down_threshold" {
+  description = "Utilization threshold at which autoscaler will initiate node shutdown"
+  type        = string
+  default     = "0.5"
+}

@@ -212,7 +212,10 @@ resource "kubernetes_deployment" "cluster_autoscaler" {
             "--expander=least-waste",
             "--balance-similar-node-groups",
             "--skip-nodes-with-system-pods=false",
-            "--node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/${var.cluster_name}"
+            "--node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/${var.cluster_name}",
+            "--scale-down-utilization-threshold=${var.autoscaler_scale_down_threshold}",
+            "--ignore-daemonsets-utilization=true",
+            "--ignore-mirror-pods-utilization=true"
           ]
 
           volume_mount {
