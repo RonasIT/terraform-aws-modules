@@ -18,3 +18,9 @@ variable "autoscaler_scale_down_threshold" {
   type        = string
   default     = "0.5"
 }
+
+variable "autoscaler_version" {
+  description = "Cluster autoscaler image version"
+  type        = string
+  default     = "v1.29.0"
+}
