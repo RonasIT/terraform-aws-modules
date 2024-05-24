@@ -68,3 +68,4 @@ module "cluster_autoscaler_irsa" {
     }
   }
 }
+
