@@ -28,7 +28,7 @@ variable "oidc_provider_arn" {
   type        = string
 }
 
-variable "cluster_autoscaler_role_enabled" {
+variable "create_cluster_autoscaler_role" {
   type        = bool
   default     = true
   description = "Whether to enable creation of cluster-autoscaler irsa role here"

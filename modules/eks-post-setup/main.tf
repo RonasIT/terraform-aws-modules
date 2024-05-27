@@ -53,11 +53,11 @@ resource "aws_eks_access_policy_association" "gitlab" {
 }
 
 module "cluster_autoscaler_irsa" {
-  count       = var.cluster_autoscaler_role_enabled ? 1 : 0
+  count       = var.create_cluster_autoscaler_role ? 1 : 0
   source      = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
   version     = "5.37.1"
   create_role = true
-  role_name   = "AmazonEKSClusterAutoscalerRole"
+  role_name   = "${var.cluster_name}_ClusterAutoscalerRole"
 
   attach_cluster_autoscaler_policy = true
   cluster_autoscaler_cluster_names = ["${var.cluster_name}"]
