@@ -200,7 +200,7 @@ resource "kubernetes_deployment" "cluster_autoscaler" {
       spec {
         service_account_name = "cluster-autoscaler"
         container {
-          image = "registry.k8s.io/autoscaling/cluster-autoscaler:${autoscaler_version}"
+          image = "registry.k8s.io/autoscaling/cluster-autoscaler:${var.autoscaler_version}"
           name  = "cluster-autoscaler"
           command = [
             "./cluster-autoscaler",
