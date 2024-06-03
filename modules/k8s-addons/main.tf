@@ -57,3 +57,23 @@ resource "helm_release" "metrics_server" {
     }
   }
 }
+
+resource "helm_release" "aws_load_balancer_controller" {
+  count = var.aws_load_balancer_controller_enabled ? 1 : 0
+
+  name             = "aws-load-balancer-controller"
+  repository       = "https://aws.github.io/eks-charts"
+  chart            = "aws-load-balancer-controller"
+  namespace        = "kube-system"
+  version          = var.aws_load_balancer_controller_chart_version
+  create_namespace = true
+
+  dynamic "set" {
+    for_each = concat(var.aws_load_balancer_controller_set_values, var.aws_load_balancer_controller_additional_set)
+    content {
+      name  = set.value.name
+      value = set.value.value
+      type  = lookup(set.value, "type", "string")
+    }
+  }
+}

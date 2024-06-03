@@ -1,3 +1,8 @@
+variable "cluster_name" {
+  description = "Name of the EKS cluster to create resources in"
+  type        = string
+}
+
 variable "cert_manager_enabled" {
   type        = bool
   default     = true
@@ -114,6 +119,38 @@ variable "metrics_server_set_values" {
 
 variable "metrics_server_additional_set" {
   description = "Optional additional set values for metrics-server Helm chart"
+  type = list(object({
+    name  = string,
+    value = string,
+    type  = optional(string)
+  }))
+  default = []
+}
+
+variable "aws_load_balancer_controller_enabled" {
+  type        = bool
+  default     = true
+  description = "Enable deployment of the AWS Load Balancer Controller into the cluster"
+}
+
+variable "aws_load_balancer_controller_chart_version" {
+  type        = string
+  default     = "1.8.1"
+  description = "AWS Load Balancer Controller Helm chart version"
+}
+
+variable "aws_load_balancer_controller_set_values" {
+  description = "Default set values for AWS Load Balancer Controller Helm chart"
+  type = list(object({
+    name  = string,
+    value = string,
+    type  = optional(string)
+  }))
+  default = []
+}
+
+variable "aws_load_balancer_controller_additional_set" {
+  description = "Optional additional set values for AWS Load Balancer Controller Helm chart"
   type = list(object({
     name  = string,
     value = string,
