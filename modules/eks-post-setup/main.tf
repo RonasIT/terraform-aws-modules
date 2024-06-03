@@ -70,3 +70,38 @@ module "cluster_autoscaler_irsa" {
   }
 }
 
+resource "aws_lb" "k8s-nlb" {
+  name               = "${var.cluster_name}-nlb"
+  internal           = false
+  load_balancer_type = "network"
+  subnets            = var.nlb_public_subnets
+
+  enable_deletion_protection = false
+}
+
+resource "aws_lb_target_group" "k8s-tg" {
+  name        = "${var.cluster_name}-tg"
+  port        = 80
+  protocol    = "TCP"
+  vpc_id      = var.vpc_id
+  target_type = "ip"
+
+  health_check {
+    interval            = 30
+    protocol            = "TCP"
+    healthy_threshold   = 3
+    unhealthy_threshold = 3
+    timeout             = 10
+  }
+}
+
+resource "aws_lb_listener" "listener" {
+  load_balancer_arn = aws_lb.k8s-nlb.arn
+  port              = 80
+  protocol          = "TCP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.k8s-tg.arn
+  }
+}

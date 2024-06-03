@@ -33,3 +33,13 @@ variable "create_cluster_autoscaler_role" {
   default     = true
   description = "Whether to enable creation of cluster-autoscaler irsa role here"
 }
+
+variable "nlb_public_subnets" {
+  description = "The public subnets for the NLB"
+  type        = list(string)
+}
+
+variable "vpc_id" {
+  description = "The ID of the VPC"
+  type        = string
+}
