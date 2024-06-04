@@ -81,7 +81,27 @@ variable "ingress_nginx_set_values" {
       name  = "controller.addHeaders.x-robots-tag",
       value = "noindex",
       type  = "string"
-    }
+    },
+    {
+      name  = "controller.service.annotations.\"service\\.beta\\.kubernetes\\.io/aws-load-balancer-type\"",
+      value = "external",
+      type  = "string"
+    },
+    {
+      name  = "controller.service.annotations.\"service\\.beta\\.kubernetes\\.io/aws-load-balancer-nlb-target-type\"",
+      value = "ip",
+      type  = "string"
+    },
+    {
+      name  = "controller.service.annotations.\"service\\.beta\\.kubernetes\\.io/aws-load-balancer-scheme\"",
+      value = "internet-facing",
+      type  = "string"
+    },
+    {
+      name  = "controller.service.annotations.\"service\\.beta\\.kubernetes\\.io/aws-load-balancer-cleanup\"",
+      value = "false"
+      type  = "string"
+    },
   ]
 }
 

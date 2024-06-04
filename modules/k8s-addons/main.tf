@@ -16,6 +16,8 @@ resource "helm_release" "cert_manager" {
       type  = lookup(set.value, "type", "string")
     }
   }
+
+  depends_on = [helm_release.aws_load_balancer_controller]
 }
 
 resource "helm_release" "ingress_nginx" {
@@ -36,6 +38,8 @@ resource "helm_release" "ingress_nginx" {
       type  = lookup(set.value, "type", "string")
     }
   }
+
+  depends_on = [helm_release.aws_load_balancer_controller]
 }
 
 resource "helm_release" "metrics_server" {
