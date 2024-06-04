@@ -4,7 +4,8 @@ output "cluster_autoscaler_role_arn" {
 }
 
 output "nlb_arn" {
-  value = aws_lb.k8s-nlb.arn
+  value       = aws_lb.k8s-nlb.arn
+  description = "ARN of the nlb that was created"
 }
 
 output "loadbalancer_controller_role_arn" {

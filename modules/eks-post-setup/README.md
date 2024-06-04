@@ -49,5 +49,5 @@
 |------|-------------|
 | <a name="output_cluster_autoscaler_role_arn"></a> [cluster\_autoscaler\_role\_arn](#output\_cluster\_autoscaler\_role\_arn) | ARN of the role for cluster autoscaler role |
 | <a name="output_loadbalancer_controller_role_arn"></a> [loadbalancer\_controller\_role\_arn](#output\_loadbalancer\_controller\_role\_arn) | ARN of the role for loadbalancer-controller role |
-| <a name="output_nlb_arn"></a> [nlb\_arn](#output\_nlb\_arn) | n/a |
+| <a name="output_nlb_arn"></a> [nlb\_arn](#output\_nlb\_arn) | ARN of the nlb that was created |
 <!-- END_TF_DOCS -->
