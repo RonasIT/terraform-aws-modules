@@ -31,7 +31,13 @@ variable "oidc_provider_arn" {
 variable "create_cluster_autoscaler_role" {
   type        = bool
   default     = true
-  description = "Whether to enable creation of cluster-autoscaler irsa role here"
+  description = "Whether to enable creation of cluster-autoscaler irsa role"
+}
+
+variable "create_loadbalancer_controller_role" {
+  type        = bool
+  default     = true
+  description = "Whether to enable creation of aws-loadbalancer-controller irsa role"
 }
 
 variable "nlb_public_subnets" {
@@ -40,6 +46,6 @@ variable "nlb_public_subnets" {
 }
 
 variable "vpc_id" {
-  description = "The ID of the VPC"
+  description = "The ID of the VPC to create resources in"
   type        = string
 }

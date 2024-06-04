@@ -1,3 +1,5 @@
+// EKS Permissions
+
 resource "aws_eks_access_entry" "teamleads" {
   cluster_name      = var.cluster_name
   principal_arn     = var.teamlead_role_arn
@@ -70,14 +72,41 @@ module "cluster_autoscaler_irsa" {
   }
 }
 
+module "loadbalancer_controller_irsa" {
+  count       = var.create_loadbalancer_controller_role ? 1 : 0
+  source      = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
+  version     = "5.37.1"
+  create_role = true
+  role_name   = "${var.cluster_name}_LoadBalancerControllerRole"
+
+  attach_load_balancer_controller_policy = true
+
+  oidc_providers = {
+    main = {
+      provider_arn               = "${var.oidc_provider_arn}"
+      namespace_service_accounts = ["kube-system:aws-load-balancer-controller"]
+    }
+  }
+}
+
+// NLB for ingress
+
 resource "aws_lb" "k8s-nlb" {
   name               = "${var.cluster_name}-nlb"
   internal           = false
   load_balancer_type = "network"
   subnets            = var.nlb_public_subnets
 
-  enable_deletion_protection = false
+  enable_deletion_protection = true
+
+  tags = {
+    "kubernetes.io/cluster/wealth-app-live" = "owned"
+    "elbv2.k8s.aws/cluster"                 = "${var.cluster_name}"
+    "service.k8s.aws/resource"              = "LoadBalancer"
+    "service.k8s.aws/stack"                 = "ingress-nginx/ingress-nginx-controller"
+  }
 }
+
 
 resource "aws_lb_target_group" "k8s-tg" {
   name        = "${var.cluster_name}-tg"
