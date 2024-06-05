@@ -102,6 +102,16 @@ variable "ingress_nginx_set_values" {
       value = "false"
       type  = "string"
     },
+    {
+      name  = "controller.service.annotations.\"service\\.beta\\.kubernetes\\.io/aws-load-balancer-cleanup\"",
+      value = "false"
+      type  = "string"
+    },
+    {
+      name  = "controller.service.annotations.\"service\\.beta\\.kubernetes\\.io/aws-load-balancer-attributes\"",
+      value = "deletion_protection.enabled=true",
+      type  = "string"
+    }
   ]
 }
 
