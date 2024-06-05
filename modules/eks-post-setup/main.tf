@@ -100,10 +100,10 @@ resource "aws_lb" "k8s-nlb" {
   enable_deletion_protection = true
 
   tags = {
-    "kubernetes.io/cluster/wealth-app-live" = "owned"
-    "elbv2.k8s.aws/cluster"                 = "${var.cluster_name}"
-    "service.k8s.aws/resource"              = "LoadBalancer"
-    "service.k8s.aws/stack"                 = "ingress-nginx/ingress-nginx-controller"
+    "kubernetes.io/cluster/${var.cluster_name}" = "owned"
+    "elbv2.k8s.aws/cluster"                     = "${var.cluster_name}"
+    "service.k8s.aws/resource"                  = "LoadBalancer"
+    "service.k8s.aws/stack"                     = "ingress-nginx/ingress-nginx-controller"
   }
 }
 
