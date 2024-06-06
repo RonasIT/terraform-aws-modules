@@ -1,3 +1,5 @@
+// EKS Permissions
+
 resource "aws_eks_access_entry" "teamleads" {
   cluster_name      = var.cluster_name
   principal_arn     = var.teamlead_role_arn
@@ -53,10 +55,11 @@ resource "aws_eks_access_policy_association" "gitlab" {
 }
 
 module "cluster_autoscaler_irsa" {
+  count       = var.create_cluster_autoscaler_role ? 1 : 0
   source      = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
   version     = "5.37.1"
   create_role = true
-  role_name   = "AmazonEKSClusterAutoscalerRole"
+  role_name   = "${var.cluster_name}_ClusterAutoscalerRole"
 
   attach_cluster_autoscaler_policy = true
   cluster_autoscaler_cluster_names = ["${var.cluster_name}"]
@@ -66,5 +69,68 @@ module "cluster_autoscaler_irsa" {
       provider_arn               = "${var.oidc_provider_arn}"
       namespace_service_accounts = ["kube-system:cluster-autoscaler"]
     }
+  }
+}
+
+module "loadbalancer_controller_irsa" {
+  count       = var.create_loadbalancer_controller_role ? 1 : 0
+  source      = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
+  version     = "5.37.1"
+  create_role = true
+  role_name   = "${var.cluster_name}_LoadBalancerControllerRole"
+
+  attach_load_balancer_controller_policy = true
+
+  oidc_providers = {
+    main = {
+      provider_arn               = "${var.oidc_provider_arn}"
+      namespace_service_accounts = ["kube-system:aws-load-balancer-controller"]
+    }
+  }
+}
+
+// NLB for ingress
+
+resource "aws_lb" "k8s-nlb" {
+  name               = "${var.cluster_name}-nlb"
+  internal           = false
+  load_balancer_type = "network"
+  subnets            = var.nlb_public_subnets
+
+  enable_deletion_protection = true
+
+  tags = {
+    "kubernetes.io/cluster/${var.cluster_name}" = "owned"
+    "elbv2.k8s.aws/cluster"                     = "${var.cluster_name}"
+    "service.k8s.aws/resource"                  = "LoadBalancer"
+    "service.k8s.aws/stack"                     = "ingress-nginx/ingress-nginx-controller"
+  }
+}
+
+
+resource "aws_lb_target_group" "k8s-tg" {
+  name        = "${var.cluster_name}-tg"
+  port        = 80
+  protocol    = "TCP"
+  vpc_id      = var.vpc_id
+  target_type = "ip"
+
+  health_check {
+    interval            = 30
+    protocol            = "TCP"
+    healthy_threshold   = 3
+    unhealthy_threshold = 3
+    timeout             = 10
+  }
+}
+
+resource "aws_lb_listener" "listener" {
+  load_balancer_arn = aws_lb.k8s-nlb.arn
+  port              = 80
+  protocol          = "TCP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.k8s-tg.arn
   }
 }

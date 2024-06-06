@@ -24,6 +24,8 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_autoscaler_scale_down_threshold"></a> [autoscaler\_scale\_down\_threshold](#input\_autoscaler\_scale\_down\_threshold) | Utilization threshold at which autoscaler will initiate node shutdown | `string` | `"0.5"` | no |
+| <a name="input_autoscaler_version"></a> [autoscaler\_version](#input\_autoscaler\_version) | Cluster autoscaler image version | `string` | `"v1.29.0"` | no |
 | <a name="input_cluster_autoscaler_role_arn"></a> [cluster\_autoscaler\_role\_arn](#input\_cluster\_autoscaler\_role\_arn) | ARN of cluster autoscaler role to use for annotating cluster-autoscaler service account | `string` | n/a | yes |
 | <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | The EKS cluster name for deploying resources (must be accessable) | `string` | n/a | yes |
 | <a name="input_maintainer_email"></a> [maintainer\_email](#input\_maintainer\_email) | The email address to be utilized for certificate generation through cert-manage | `string` | n/a | yes |

@@ -199,9 +199,8 @@ resource "kubernetes_deployment" "cluster_autoscaler" {
 
       spec {
         service_account_name = "cluster-autoscaler"
-
         container {
-          image = "registry.k8s.io/autoscaling/cluster-autoscaler:v1.29.0"
+          image = "registry.k8s.io/autoscaling/cluster-autoscaler:${var.autoscaler_version}"
           name  = "cluster-autoscaler"
           command = [
             "./cluster-autoscaler",
@@ -210,9 +209,11 @@ resource "kubernetes_deployment" "cluster_autoscaler" {
             "--cloud-provider=aws",
             "--skip-nodes-with-local-storage=false",
             "--expander=least-waste",
-            "--balance-similar-node-groups",
             "--skip-nodes-with-system-pods=false",
-            "--node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/${var.cluster_name}"
+            "--node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/${var.cluster_name}",
+            "--scale-down-utilization-threshold=${var.autoscaler_scale_down_threshold}",
+            "--ignore-daemonsets-utilization=true",
+            "--ignore-mirror-pods-utilization=true"
           ]
 
           volume_mount {
@@ -232,6 +233,3 @@ resource "kubernetes_deployment" "cluster_autoscaler" {
     }
   }
 }
-
-# "--nodes=1:5:${var.default_node_group_name}",
-# "--nodes=0:5:${var.spot_node_group_name}"
