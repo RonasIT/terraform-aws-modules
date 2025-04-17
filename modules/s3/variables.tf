@@ -32,8 +32,6 @@ variable "s3_cors_configuration" {
     expose_headers  = []
     max_age_seconds = 3000
   }
-
-
 }
 variable "create_gitlab_runner_bucket" {
   default     = true
