@@ -33,6 +33,7 @@ variable "s3_cors_configuration" {
     max_age_seconds = 3000
   }
 }
+
 variable "create_gitlab_runner_bucket" {
   default     = true
   description = "Flag to enable/disable creation of dedicated bucket for gitlab-runner cache"
