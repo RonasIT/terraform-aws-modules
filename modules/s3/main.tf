@@ -4,6 +4,19 @@ resource "aws_s3_bucket" "artifacts" {
   lifecycle {
     prevent_destroy = true
   }
+
+}
+
+resource "aws_s3_bucket_cors_configuration" "cors_configuration" {
+  count  = var.cors_config_enabled ? 1 : 0
+  bucket = aws_s3_bucket.artifacts.bucket
+  cors_rule {
+    allowed_headers = var.s3_cors_configuration.allowed_headers
+    allowed_methods = var.s3_cors_configuration.allowed_methods
+    allowed_origins = var.s3_cors_configuration.allowed_origins
+    expose_headers  = var.s3_cors_configuration.expose_headers
+    max_age_seconds = var.s3_cors_configuration.max_age_seconds
+  }
 }
 
 resource "aws_s3_bucket_ownership_controls" "artifacts" {

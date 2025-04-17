@@ -4,6 +4,36 @@ variable "artifacts_bucket_name" {
   type        = string
 }
 
+variable "cors_config_enabled" {
+  default     = false
+  description = "Flag to enable/disable creation of CORS config"
+  type        = bool
+}
+
+variable "s3_cors_configuration" {
+  type = object({
+    allowed_headers = list(string)
+    allowed_methods = list(string)
+    allowed_origins = list(string)
+    expose_headers  = list(string)
+    max_age_seconds = number
+  })
+
+  default = {
+    allowed_headers = ["*"]
+    allowed_methods = [
+      "GET",
+      "PUT",
+      "POST",
+      "HEAD",
+      "DELETE"
+    ]
+    allowed_origins = ["*"]
+    expose_headers  = []
+    max_age_seconds = 3000
+  }
+}
+
 variable "create_gitlab_runner_bucket" {
   default     = true
   description = "Flag to enable/disable creation of dedicated bucket for gitlab-runner cache"
