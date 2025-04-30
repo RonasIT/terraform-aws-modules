@@ -31,7 +31,11 @@ resource "helm_release" "ingress_nginx" {
   create_namespace = true
 
   dynamic "set" {
-    for_each = concat(var.ingress_nginx_set_values, var.ingress_nginx_additional_set)
+    for_each = concat(
+      var.ingress_nginx_set_values,
+      var.aws_load_balancer_controller_enabled ? var.ingress_nginx_LBC_set_values : [],
+      var.ingress_nginx_additional_set
+    )
     content {
       name  = set.value.name
       value = set.value.value

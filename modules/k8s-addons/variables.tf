@@ -83,6 +83,21 @@ variable "ingress_nginx_set_values" {
       type  = "string"
     },
     {
+      name  = "controller.allowSnippetAnnotations"
+      value = "true"
+    }
+  ]
+}
+
+variable "ingress_nginx_LBC_set_values" {
+  description = "LoadBalancer-controller-specific set values for ingress-nginx Helm chart"
+  type = list(object({
+    name  = string,
+    value = string,
+    type  = optional(string)
+  }))
+  default = [
+    {
       name  = "controller.service.annotations.\"service\\.beta\\.kubernetes\\.io/aws-load-balancer-type\"",
       value = "external",
       type  = "string"
@@ -99,12 +114,7 @@ variable "ingress_nginx_set_values" {
     },
     {
       name  = "controller.service.annotations.\"service\\.beta\\.kubernetes\\.io/aws-load-balancer-cleanup\"",
-      value = "false"
-      type  = "string"
-    },
-    {
-      name  = "controller.service.annotations.\"service\\.beta\\.kubernetes\\.io/aws-load-balancer-cleanup\"",
-      value = "false"
+      value = "false",
       type  = "string"
     },
     {
@@ -116,7 +126,7 @@ variable "ingress_nginx_set_values" {
 }
 
 variable "ingress_nginx_additional_set" {
-  description = "Optional additional set values for cert-manager Helm chart"
+  description = "Optional additional set values for ingress-nginx Helm chart"
   type = list(object({
     name  = string,
     value = string,
