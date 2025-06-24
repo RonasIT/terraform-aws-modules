@@ -27,11 +27,14 @@
 
 | Name | Type |
 |------|------|
+| [aws_iam_access_key.additional_service_accounts_access_keys](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key) | resource |
 | [aws_iam_group_membership.developer_group_membership](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_group_membership) | resource |
 | [aws_iam_group_membership.teamlead_group_membership](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_group_membership) | resource |
 | [aws_iam_policy.developer_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.ecr_read_only_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.storage_s3_access](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
+| [aws_iam_user.additional_service_accounts](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
+| [aws_iam_user_policy_attachment.custom_policy_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy_attachment) | resource |
 | [aws_iam_user_policy_attachment.storage_s3_access_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy_attachment) | resource |
 | [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
 
@@ -39,6 +42,7 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_additional_service_accounts"></a> [additional\_service\_accounts](#input\_additional\_service\_accounts) | Map of usernames to a list of policy ARNs | `map(list(string))` | n/a | yes |
 | <a name="input_developer_members"></a> [developer\_members](#input\_developer\_members) | The usernames of members in the developer group (not emails) | `list(string)` | n/a | yes |
 | <a name="input_teamlead_members"></a> [teamlead\_members](#input\_teamlead\_members) | The usernames of members in the teamlead group (not emails) | `list(string)` | n/a | yes |
 
@@ -46,6 +50,8 @@
 
 | Name | Description |
 |------|-------------|
+| <a name="output_additional_service_account_arns"></a> [additional\_service\_account\_arns](#output\_additional\_service\_account\_arns) | The ARNs of the created IAM users |
+| <a name="output_additional_service_accounts_access_keys"></a> [additional\_service\_accounts\_access\_keys](#output\_additional\_service\_accounts\_access\_keys) | Access keys for additional service accounts |
 | <a name="output_developer_users"></a> [developer\_users](#output\_developer\_users) | Account data to use by developers |
 | <a name="output_developers_iam_role"></a> [developers\_iam\_role](#output\_developers\_iam\_role) | Developer role details to use in other modules |
 | <a name="output_ecr_read_only_policy_arn"></a> [ecr\_read\_only\_policy\_arn](#output\_ecr\_read\_only\_policy\_arn) | ARN of the ECR read-only access policy to attach to EKS nodes |

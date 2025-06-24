@@ -239,3 +239,32 @@ resource "aws_iam_policy" "ecr_read_only_policy" {
     ],
   })
 }
+
+resource "aws_iam_user" "additional_service_accounts" {
+  for_each = var.additional_service_accounts
+
+  name = each.key
+}
+
+resource "aws_iam_user_policy_attachment" "custom_policy_attachment" {
+  for_each = {
+    for pair in flatten([
+      for user, policies in var.additional_service_accounts : [
+        for policy in policies : {
+          key    = "${user}-${replace(basename(policy), ":", "-")}"
+          user   = user
+          policy = policy
+        }
+      ]
+    ]) : pair.key => pair
+  }
+  
+  user       = aws_iam_user.additional_service_accounts[each.value.user].name
+  policy_arn = each.value.policy
+}
+
+resource "aws_iam_access_key" "additional_service_accounts_access_keys" {
+  for_each = var.additional_service_accounts
+
+  user = aws_iam_user.additional_service_accounts[each.key].name
+}
