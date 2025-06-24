@@ -53,3 +53,19 @@ output "ecr_read_only_policy_arn" {
   description = "ARN of the ECR read-only access policy to attach to EKS nodes"
   sensitive   = false
 }
+
+output "additional_service_account_arns" {
+  description = "The ARNs of the created IAM users"
+  value       = { for user, cfg in aws_iam_user.additional_service_accounts : user => cfg.arn }
+
+}
+
+output "additional_service_accounts_access_keys" {
+  description = "Access keys for additional service accounts"
+  value = { for user, key in aws_iam_access_key.additional_service_accounts_access_keys : user => {
+    access_key_id     = key.id
+    secret_access_key = key.secret
+    }
+  }
+  sensitive = true
+}

@@ -9,3 +9,8 @@ variable "developer_members" {
   type        = list(string)
   sensitive   = false
 }
+
+variable "additional_service_accounts" {
+  description = "Map of usernames to a list of policy ARNs"
+  type        = map(list(string))
+}
